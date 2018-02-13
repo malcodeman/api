@@ -1,8 +1,14 @@
-const app = require('./index');
-const routes = require('./routes/routes');
+const express = require("express");
+const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
+const routes = require("./routes/routes");
+const app = express();
 
-const PORT = process.env.PORT || 3001;
+mongoose.Promise = global.Promise;
+mongoose.connect("mongodb://localhost/fb");
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 routes(app);
 
-app.listen(PORT, () => console.log(`listening on port ${PORT}`));
+module.exports = app;
